@@ -1,0 +1,25 @@
+App.java
+
+private void sendBucks() {
+        // TODO Auto-generated method stub
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setBearerAuth(currentUser.getToken());
+        HttpEntity entity = new HttpEntity(httpHeaders);
+        User[] users = null;
+        users = restTemplate.exchange("http://localhost:8080/all",
+                HttpMethod.GET, entity, User[].class).getBody();
+        for (User user1 : users) {
+
+            System.out.println(user1.getId() + ": " + user1.getUsername());
+        }
+            //4ii)
+            String recepientId = console.getUserInput("Enter ID of user you are sending to (0 to cancel): ");
+
+           // Ask the user and capture the amount that they want to send
+            String amount = console.getUserInput("Enter amount: $");
+
+            Transfer transfer = new Transfer(2, 1, currentUser.getUser().getId(),
+                    Integer.parseInt(recepientId), Integer.parseInt(amount));
+            System.out.println("Transfer Receipient: " + transfer.getAccountReceiver() + "       | Transfer Sender: "
+                    + transfer.getAccountSender() + "       | Amount: $" + transfer.getAmount());
+        }
